@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'client',
 
 ]
 
@@ -121,6 +122,20 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+
+############
+# GUARDIAN #
+############
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    # 'guardian.backends.ObjectPermissionBackend',
+)
+ANONYMOUS_USER_ID = '-1'
+
+########
+# AUTH #
+########
+AUTH_USER_MODEL = 'client.Client'
 
 ##################
 # LOCAL SETTINGS #
