@@ -1,4 +1,3 @@
-from django.db.models import Q
 from rest_framework import generics, viewsets
 
 from api.settings import ANONYMOUS_USER_ID

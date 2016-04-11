@@ -1,7 +1,3 @@
-from django.db import transaction
-from django.db.models import Q
-
-# from guardian.shortcuts import assign, get_objects_for_user
 from rest_framework import serializers
 
 from .models import Client

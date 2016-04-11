@@ -31,6 +31,8 @@ urlpatterns = [
 
     # client
     url(r'', include('client.urls')),
+    # document
+    url(r'', include('document.urls')),
     #apilogin
     url(r'', include('apiauth.urls')),
 
