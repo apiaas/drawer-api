@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'client',
     'apiauth',
     'document',
+    'guardian',
 
 ]
 
@@ -130,7 +131,7 @@ STATIC_URL = '/static/'
 ############
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    # 'guardian.backends.ObjectPermissionBackend',
+    'guardian.backends.ObjectPermissionBackend',
 )
 ANONYMOUS_USER_ID = '-1'
 
