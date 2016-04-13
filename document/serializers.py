@@ -8,10 +8,6 @@ class DocumentSerializer(serializers.ModelSerializer):
     processed_text = serializers.CharField(max_length=None, min_length=None, allow_blank=True, trim_whitespace=True)
     description = serializers.CharField(max_length=None, min_length=None, allow_blank=True, trim_whitespace=True)
 
-    # def validate(self, attrs):
-    #     processed_text = attrs.get('processed_text')
-    #     description = attrs.get('description')
-
     def create(self, validated_data, user):
         # (self, **kwargs):
         with transaction.atomic():
@@ -21,10 +17,6 @@ class DocumentSerializer(serializers.ModelSerializer):
             assign_perm(Document.CAN_DELETE, user, obj)
             assign_perm(Document.CAN_UPDATE, user, obj)
             return obj
-
-    # def update(self):
-    def update(self, instance, validated_data):
-        return super(DocumentSerializer, self).save(validated_data)
 
 
     class Meta:
