@@ -38,4 +38,12 @@ class DocumentDetail(generics.RetrieveUpdateAPIView):
     def get_queryset(self):
         return Document.objects.all()
 
+    def delete(self, request, pk, format=None):
+        try:
+            doc = Document.objects.get(pk=pk)
+            doc.delete()
+        except Document.DoesNotExist:
+            raise status.HTTP_404_NOT_FOUND
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 document_detail = DocumentDetail.as_view()
