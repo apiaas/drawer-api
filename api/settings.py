@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    # 'rest_framework.authtoken',
     'client',
     'apiauth',
     'document',
@@ -139,6 +140,29 @@ ANONYMOUS_USER_ID = '-1'
 # AUTH #
 ########
 AUTH_USER_MODEL = 'client.Client'
+
+##################
+# REST FRAMEWORK #
+##################
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        #'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'apiauth.authentication.TokenAuthentication'
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_FILTER_BACKENDS': (
+        'rest_framework.filters.DjangoFilterBackend',
+        'rest_framework.filters.SearchFilter',
+        'rest_framework.filters.OrderingFilter'
+    ),
+    'PAGINATE_BY': 25,
+    'PAGINATE_BY_PARAM': 'paginate_by',
+}
+
 
 ##################
 # LOCAL SETTINGS #
