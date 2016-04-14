@@ -7,10 +7,10 @@ class Document(models.Model):
     CAN_DELETE = 'can_delete_document'
     CAN_UPDATE = 'can_change_document'
 
-    filename = models.CharField(max_length=100)
-    path = models.CharField(max_length=100)
-    description = models.TextField()
-    processed_text = models.TextField()
+    filename = models.CharField(max_length=100, default='')
+    path = models.CharField(max_length=100, default='')
+    description = models.TextField(default='')
+    processed_text = models.TextField(default='')
     deleted = models.BooleanField()
     processed = models.BooleanField(default=False)
     processing_start_time = models.IntegerField(default=0)

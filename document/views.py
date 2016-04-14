@@ -22,6 +22,11 @@ class DocumentList(generics.ListCreateAPIView):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             serializer.create(validated_data=serializer.validated_data, user=request.user)
+            up_file = request.FILES['fileUpload']
+            destination = open('media/' + up_file.name, 'wb+')
+            for chunk in up_file.chunks():
+                destination.write(chunk)
+                destination.close()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
