@@ -19,14 +19,19 @@ class DocumentList(generics.ListCreateAPIView):
         return documents_qs
 
     def post(self, request, *args, **kwargs):
-        serializer = self.serializer_class(data=request.data)
+
+        up_file = request.FILES['fileUpload']
+        file_path = 'media/' + up_file.name
+        destination = open(file_path, 'wb+')
+        for chunk in up_file.chunks():
+            destination.write(chunk)
+            destination.close()
+        data = request.data.copy()
+        data['filename'] = up_file.name
+        data['path'] = file_path
+        serializer = self.serializer_class(data=data)
         if serializer.is_valid():
             serializer.create(validated_data=serializer.validated_data, user=request.user)
-            up_file = request.FILES['fileUpload']
-            destination = open('media/' + up_file.name, 'wb+')
-            for chunk in up_file.chunks():
-                destination.write(chunk)
-                destination.close()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

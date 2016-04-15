@@ -11,9 +11,9 @@ class Document(models.Model):
     path = models.CharField(max_length=100, default='')
     description = models.TextField(default='')
     processed_text = models.TextField(default='')
-    deleted = models.BooleanField()
-    processed = models.BooleanField(default=False)
-    processing_start_time = models.IntegerField(default=0)
+    # deleted = models.BooleanField()
+    # processed = models.BooleanField(default=False)
+    # processing_start_time = models.IntegerField(default=0)
 
     class Meta:
         permissions = (
