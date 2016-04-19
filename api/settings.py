@@ -38,11 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'haystack',
     # 'rest_framework.authtoken',
     'client',
     'apiauth',
     'document',
     'guardian',
+
 
 ]
 
@@ -164,10 +166,18 @@ REST_FRAMEWORK = {
 }
 
 
-##################
-# LOCAL SETTINGS #
-##################
-try:
-    from local_settings import *
-except ImportError:
-    pass
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': os.path.join(os.path.dirname(__file__), 'whoosh_index'),
+    },
+}
+
+
+# ##################
+# # LOCAL SETTINGS #
+# ##################
+# try:
+#     from local_settings import *
+# except ImportError:
+#     pass

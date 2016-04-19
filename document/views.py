@@ -1,9 +1,12 @@
 from rest_framework import generics, status
 from guardian.shortcuts import get_objects_for_user
 from .models import Document
-from .serializers import DocumentSerializer
+from .serializers import DocumentSerializer, DocumentIndexSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from drf_haystack.viewsets import HaystackViewSet
+from rest_framework.mixins import ListModelMixin
+from drf_haystack.generics import HaystackGenericAPIView
 
 
 class DocumentList(generics.ListCreateAPIView):
@@ -57,3 +60,25 @@ class DocumentDetail(generics.RetrieveUpdateAPIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 document_detail = DocumentDetail.as_view()
+
+
+class DocumentSearchView(HaystackViewSet):
+
+    # `index_models` is an optional list of which models you would like to include
+    # in the search result. You might have several models indexed, and this provides
+    # a way to filter out those of no interest for this particular view.
+    # (Translates to `SearchQuerySet().models(*index_models)` behind the scenes.
+    index_models = [Document]
+
+    serializer_class = DocumentIndexSerializer
+
+
+class SearchView(ListModelMixin, HaystackGenericAPIView):
+
+    serializer_class = DocumentIndexSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+document_search = SearchView.as_view()
+
