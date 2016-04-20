@@ -8,6 +8,7 @@ from drf_haystack.viewsets import HaystackViewSet
 from rest_framework.mixins import ListModelMixin
 from drf_haystack.generics import HaystackGenericAPIView
 
+from haystack.query import SearchQuerySet
 
 class DocumentList(generics.ListCreateAPIView):
     """
@@ -45,7 +46,7 @@ class DocumentDetail(generics.RetrieveUpdateAPIView):
     """
     Document detail.
     """
-    model = Document
+
     serializer_class = DocumentSerializer
 
     def get_queryset(self):
@@ -62,20 +63,22 @@ class DocumentDetail(generics.RetrieveUpdateAPIView):
 document_detail = DocumentDetail.as_view()
 
 
-class DocumentSearchView(HaystackViewSet):
-
-    # `index_models` is an optional list of which models you would like to include
-    # in the search result. You might have several models indexed, and this provides
-    # a way to filter out those of no interest for this particular view.
-    # (Translates to `SearchQuerySet().models(*index_models)` behind the scenes.
-    index_models = [Document]
-
-    serializer_class = DocumentIndexSerializer
-
+# class DocumentSearchView(HaystackViewSet):
+#     def wasd(asd, asd2):
+#         return Response(data={'asd': 3242}, status=status.HTTP_200_OK)
+#     # `index_models` is an optional list of which models you would like to include
+#     # in the search result. You might have several models indexed, and this provides
+#     # a way to filter out those of no interest for this particular view.
+#     # (Translates to `SearchQuerySet().models(*index_models)` behind the scenes.
+#     index_models = [Document]
+#
+#     serializer_class = DocumentIndexSerializer
+#
+# document_search = DocumentSearchView.as_view({'get': 'wasd'})
 
 class SearchView(ListModelMixin, HaystackGenericAPIView):
-
     serializer_class = DocumentIndexSerializer
+    model = Document
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)

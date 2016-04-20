@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from guardian.shortcuts import assign_perm
 from .models import Document
-from api.search_indexes import DocumentIndex
+from document.search_indexes import DocumentIndex
 from django.db import transaction
 from drf_haystack.serializers import HaystackSerializer
 
@@ -24,6 +24,7 @@ class DocumentSerializer(serializers.ModelSerializer):
 class DocumentIndexSerializer(HaystackSerializer):
 
     class Meta:
+        model = Document
         # The `index_classes` attribute is a list of which search indexes
         # we want to include in the search.
         index_classes = [DocumentIndex]
