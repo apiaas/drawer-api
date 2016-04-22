@@ -1,6 +1,5 @@
-from django.utils import timezone
 from haystack import indexes
-from document.models import Document
+from .models import Document
 
 
 class DocumentIndex(indexes.SearchIndex, indexes.Indexable):

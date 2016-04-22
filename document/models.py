@@ -1,5 +1,8 @@
 from django.db import models
 
+def get_path(instance, second):
+    print(second)
+    return instance.path
 
 # Create your models here.
 class Document(models.Model):
@@ -11,9 +14,7 @@ class Document(models.Model):
     path = models.CharField(max_length=100, default='')
     description = models.TextField(default='')
     processed_text = models.TextField(default='')
-    # deleted = models.BooleanField()
-    # processed = models.BooleanField(default=False)
-    # processing_start_time = models.IntegerField(default=0)
+    file = models.FileField(upload_to=get_path, default=None)
 
     class Meta:
         permissions = (
