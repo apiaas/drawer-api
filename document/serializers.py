@@ -18,7 +18,7 @@ class DocumentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Document
-        extra_kwargs = {'path': {'write_only': True}, 'filename': {'write_only': True}}
+        # extra_kwargs = {'path': {'write_only': True}, 'filename': {'write_only': True}}
 
 
 class DocumentIndexSerializer(HaystackSerializer):
@@ -33,5 +33,5 @@ class DocumentIndexSerializer(HaystackSerializer):
         # NOTE: Make sure you don't confuse these with model attributes. These
         # fields belong to the search index!
         fields = [
-            "text", "description", "processed_text",
+            "text", "description", "processed_text", 'path'
         ]

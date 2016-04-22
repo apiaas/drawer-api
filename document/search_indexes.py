@@ -7,6 +7,7 @@ class DocumentIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True)
     description = indexes.CharField(model_attr="description")
     processed_text = indexes.CharField(model_attr="processed_text")
+    path = indexes.CharField(model_attr="path")
 
     @staticmethod
     def prepare_autocomplete(obj):

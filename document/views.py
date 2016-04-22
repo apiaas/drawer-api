@@ -27,7 +27,6 @@ class DocumentList(generics.ListCreateAPIView):
         data['filename'] = up_file.name
         data['file'] = up_file
         data['path'] = 'media/user_{0}/{1}_{2}'.format(request.user.id, str(time.time()), up_file.name)
-        print(data['path'])
         serializer = self.serializer_class(data=data)
         if serializer.is_valid():
             serializer.create(validated_data=serializer.validated_data, user=request.user)
@@ -58,24 +57,16 @@ class DocumentDetail(generics.RetrieveUpdateAPIView):
 document_detail = DocumentDetail.as_view()
 
 
-# class DocumentSearchView(HaystackViewSet):
-#     def wasd(asd, asd2):
-#         return Response(data={'asd': 3242}, status=status.HTTP_200_OK)
-#     # `index_models` is an optional list of which models you would like to include
-#     # in the search result. You might have several models indexed, and this provides
-#     # a way to filter out those of no interest for this particular view.
-#     # (Translates to `SearchQuerySet().models(*index_models)` behind the scenes.
-#     index_models = [Document]
-#
-#     serializer_class = DocumentIndexSerializer
-#
-# document_search = DocumentSearchView.as_view({'get': 'wasd'})
-
 class DocumentSearchView(ListModelMixin, HaystackGenericAPIView):
     serializer_class = DocumentIndexSerializer
     index_models = [Document]
+
     def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
+        result = self.list(request, *args, **kwargs)
+
+        # for item in result:
+        #     print(item)
+        return result
 
 document_search = DocumentSearchView.as_view()
 
