@@ -7,6 +7,8 @@ from rest_framework.response import Response
 from rest_framework.mixins import ListModelMixin
 from drf_haystack.generics import HaystackGenericAPIView
 import time
+from client.models import Client
+
 
 class DocumentList(generics.ListCreateAPIView):
     """
@@ -62,11 +64,12 @@ class DocumentSearchView(ListModelMixin, HaystackGenericAPIView):
     index_models = [Document]
 
     def get(self, request, *args, **kwargs):
-        result = self.list(request, *args, **kwargs)
+        # get user by telegram_id and search for him
+        telegram_id = int(request.query_params['telegram_user_id'])
+        user, created = Client.objects.get_or_create(telegram_id=telegram_id, username=str(telegram_id))
+        request.user = user
 
-        # for item in result:
-        #     print(item)
-        return result
+        return self.list(request, *args, **kwargs)
 
 document_search = DocumentSearchView.as_view()
 
