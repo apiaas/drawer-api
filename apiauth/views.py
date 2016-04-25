@@ -9,7 +9,7 @@ from django.conf import settings
 
 from client.serializers import ClientSerializer
 from .models import Token
-from .serializers import AuthTokenSerializer
+from .serializers import AuthTokenSerializer, ApiRegisterSerializer
 
 
 
@@ -58,7 +58,19 @@ class ObtainAuthToken(generics.GenericAPIView):
         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 
 
+class ApiRegister(generics.GenericAPIView):
+
+    serializer_class = ApiRegisterSerializer
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            return Response({'password': serializer.validated_data['password']}, status=201)
+        return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+
+
 apilogin = ApiLogin.as_view()
+apiregister = ApiRegister.as_view()
 obtain_auth_token = ObtainAuthToken.as_view()
 
 
