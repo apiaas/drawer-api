@@ -60,6 +60,7 @@ class ObtainAuthToken(generics.GenericAPIView):
 
 class ApiRegister(generics.GenericAPIView):
 
+    permission_classes = ()
     serializer_class = ApiRegisterSerializer
 
     def post(self, request):
