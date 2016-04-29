@@ -23,12 +23,12 @@ class DocumentList(generics.ListCreateAPIView):
         return documents_qs
 
     def post(self, request, *args, **kwargs):
-
-        up_file = request.FILES['fileUpload']
+        up_file = request.FILES['file']
         data = request.data.copy()
         data['filename'] = up_file.name
         data['file'] = up_file
-        data['path'] = 'media/user_{0}/{1}_{2}'.format(request.user.id, str(time.time()), up_file.name)
+        data['path'] = 'user_{0}/{1}_{2}'.format(request.user.id, str(time.time()), up_file.name)
+        data['author'] = request.user.pk
         serializer = self.serializer_class(data=data)
         if serializer.is_valid():
             serializer.create(validated_data=serializer.validated_data, user=request.user)
@@ -58,13 +58,19 @@ class DocumentDetail(generics.RetrieveUpdateAPIView):
 
 document_detail = DocumentDetail.as_view()
 
-
-class DocumentSearchView(ListModelMixin, HaystackGenericAPIView):
+class DocumentSearchView(HaystackGenericAPIView):
     serializer_class = DocumentIndexSerializer
     index_models = [Document]
 
     def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
+        queryset = self.filter_queryset(self.get_queryset())
+        queryset = queryset.filter(author=request.user.username)
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 document_search = DocumentSearchView.as_view()
 

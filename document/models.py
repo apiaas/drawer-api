@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 def get_path(instance, second):
     print(second)
@@ -15,6 +16,7 @@ class Document(models.Model):
     description = models.TextField(default='')
     processed_text = models.TextField(default='')
     file = models.FileField(upload_to=get_path, default=None)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, default=-1)
 
     class Meta:
         permissions = (

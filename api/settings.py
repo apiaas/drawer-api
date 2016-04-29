@@ -161,8 +161,15 @@ REST_FRAMEWORK = {
         'rest_framework.filters.SearchFilter',
         'rest_framework.filters.OrderingFilter'
     ),
-    'PAGINATE_BY': 25,
-    'PAGINATE_BY_PARAM': 'paginate_by',
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+
+
+    # 'PAGINATE_BY': 5,
+    # 'PAGINATE_BY_PARAM': 'paginate_by',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 5,
+
+
 }
 
 
