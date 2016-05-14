@@ -185,7 +185,7 @@ MEDIA_ROOT = "/home/sf/PycharmProjects/apiaas/drawer-api/media/"
 # ##################
 # # LOCAL SETTINGS #
 # ##################
-# try:
-#     from local_settings import *
-# except ImportError:
-#     pass
+try:
+    from .local_settings import *
+except ImportError:
+    pass

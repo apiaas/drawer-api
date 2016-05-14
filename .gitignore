@@ -67,3 +67,5 @@ db.*
 
 
 media/*
+
+api/.local_settings.py
