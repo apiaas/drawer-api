@@ -182,6 +182,8 @@ HAYSTACK_CONNECTIONS = {
 
 MEDIA_ROOT = BASE_DIR + "/media/"
 
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
 # ##################
 # # LOCAL SETTINGS #
 # ##################
