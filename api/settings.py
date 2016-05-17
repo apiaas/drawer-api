@@ -180,7 +180,7 @@ HAYSTACK_CONNECTIONS = {
     },
 }
 
-MEDIA_ROOT = "/home/sf/PycharmProjects/apiaas/drawer-api/media/"
+MEDIA_ROOT = BASE_DIR + "/media/"
 
 # ##################
 # # LOCAL SETTINGS #
