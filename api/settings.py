@@ -39,11 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'haystack',
+    'guardian',
     # 'rest_framework.authtoken',
     'client',
     'apiauth',
     'document',
-    'guardian',
+
 
 
 ]

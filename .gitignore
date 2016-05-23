@@ -69,3 +69,5 @@ db.*
 media/*
 
 api/.local_settings.py
+api/whoosh_index/
+whoosh_test/
